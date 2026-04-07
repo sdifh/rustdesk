@@ -1,4 +1,8 @@
-name: Build RustDesk Windows
+name: Build RustDesk Windows (Node24 Fixed)
+
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 on:
   workflow_dispatch:
@@ -8,9 +12,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+        uses: actions/checkout@v4.2.0
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -31,8 +33,8 @@ jobs:
       - name: Build release
         run: cargo build --release --features "inline"
 
-      - name: Upload exe
-        uses: actions/upload-artifact@v4
+      - name: Upload compiled exe
+        uses: actions/upload-artifact@v4.4.0
         with:
           name: rustdesk-windows
           path: target/release/rustdesk.exe
